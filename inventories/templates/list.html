@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Inventory List{% endblock title %}
+
+{% block content %}
+<br>
+<form action="{% url 'inventories:list' %}">
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Search" aria-label="Search" name="q" value="{{request.GET.q}}">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </div>
+  </div>
+</form>
+<div class="row">
+    {% for inventory in inventories %}
+    <div class="col-md-4">
+        <div class="card my-card">
+          <div class="card-body">
+            <h5 class="card-title">{{inventory.name}}</h5>
+            <p class="card-text">
+              <div class="float-left">
+                Store Name : {{inventory.store.name|truncatechars:25}}
+              </div>
+              <div class="float-left">
+                Empty? {{inventory.is_empty|truncatechars:25}}
+              </div>
+              <div class="float-left">
+                Last Updated: {{inventory.last_updated|truncatechars:25}}
+              </div>
+            </p>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
+
